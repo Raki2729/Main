@@ -23,7 +23,7 @@ studentInfo.post('/StudentInfo',(req,res)=>{
 
 });
 
-app.post('/students/cs-course', (req, res) => {
+studentInfo.post('/students/course', (req, res) => {
     const { course_id } = req.body;
     const studentsTakenCourse = data.filter(student => 
         student.courses.includes(course_id)

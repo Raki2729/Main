@@ -26,7 +26,7 @@ app.use('/https-web-service/v1',studentInfo)
 
 
 
-server.listen(8080, ()=>{
+server.listen(8000, ()=>{
     console.log('Server is up')
 })
 
