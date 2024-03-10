@@ -2,6 +2,8 @@ const express = require('express')
 const https = require('https')
 const fs = require('fs')
 const startup = require('./routes/startup')
+const classSchedule = require('./routes/classSchedule')
+const location = require('./routes/location')
 
 
 const app = express()
@@ -16,11 +18,13 @@ const httpsOptions ={
 const server = https.createServer(httpsOptions,app)
 app.use(express.json())
 app.use('/https-web-service/v1',startup)
+app.use('/https-web-service/v1',classSchedule)
+app.use('/https-web-service/v1',location)
+
+
 // domain-name/web-service/v1/<route/path/> ==> endpoint
 //safeway.com/order-purchases/v1/purchasHistory ==> endpoint
 // safeway.com/order-purchases/v2/purchaseHistory ===> endpoint
-
-
 
 
 
