@@ -9,12 +9,20 @@ console.log(data, "this is our data")
 //POST /to retrieve student's info who has taken CS548 -> the result should be all students ( return student-id only)
 //POST /to retrieve who has taken the courses you have taken except CS548. (Hint: Pass your student-id  for example for Rahel its CS522, find out who has taken this course) one of the logic could be this 
 //students.filter(student => student.courses.some(course => course.course_id === course_id)
-studentInfo.get('/studentinfo', (req,res)=>{
-    res.json(data)
+studentInfo.use((req,res,next)=>{
+    req.userIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+    req.userDevice = req.get('User-Agent')
+    next()
 })
-studentInfo.post('/StudentInfo',(req,res)=>{
+studentInfo.get('/studentinfo', (req,res)=>{
+    const userIp= req.userIP;
+    const userDevice = req.userDevice;
+    console.log(userIp, userDevice)
+    res.json({userIp, userDevice,data})
+})
+studentInfo.post('/student',(req,res)=>{
     const {student_id} = req.body;
-    const foundStudent= data.find(s=> s["Student_Id"]===student_id)
+    const foundStudent= data.find(s=> s.Student_Id === student_id)
     if(foundStudent){
         res.json(foundStudent);
     }else{
