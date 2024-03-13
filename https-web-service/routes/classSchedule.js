@@ -56,9 +56,9 @@ classSchedule.get('/online-courses',(req,res)=>{
 })
 
 classSchedule.post('/classroom', (req,res)=>{
-    const userIp = req.userIp;
-    const userDevice = req.userDevice;
-    console.log(userIp, userDevice)
+    //const userIp = req.userIp;
+    //const userDevice = req.userDevice;
+    //console.log(userIp, userDevice)
     const {course} = req.body
     if(!course){
         return res.status(400).json({message: "Course was not provided"})
@@ -66,7 +66,8 @@ classSchedule.post('/classroom', (req,res)=>{
     }
     const courseObject = data.find(c => c.Course === course)
     // classroom is object
-    res.status(200).json({userIp, userDevice,classroom:courseObject?.Classroom })
+    //res.status(200).json({userIp, userDevice,classroom:courseObject?.Classroom })
+    res.status(200).json({classroom: courseObject?.Classroom})
 })
 
 classSchedule.post('/courseinfo',(req,res)=>{
