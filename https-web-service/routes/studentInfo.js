@@ -20,15 +20,14 @@ studentInfo.get('/studentinfo', (req,res)=>{
     console.log(userIp, userDevice)
     res.json({userIp, userDevice,data})
 })
-studentInfo.post('/student',(req,res)=>{
-    const {student_id} = req.body;
-    const foundStudent= data.find(s=> s.Student_Id === student_id)
-    if(foundStudent){
-        res.json(foundStudent);
-    }else{
-        res.status(404).json({message:"student not found!!"})
+studentInfo.post('/student', (req, res) => {
+    const { student_id } = req.body; // Adjust this to match the case used in your JSON objects, if necessary
+    const foundStudent = data.find(s => s.Student_Id === student_id); // Ensure this matches your data structure
+    if (foundStudent) {
+        res.status(200).json(foundStudent);
+    } else {
+        res.status(404).json({ message: "Student not found!!" });
     }
-
 });
 
 studentInfo.post('/students/course', (req, res) => {
