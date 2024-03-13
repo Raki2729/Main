@@ -22,19 +22,19 @@ studentInfo.get('/studentinfo', (req,res)=>{
 })
 studentInfo.post('/student',(req,res)=>{
     const {student_id} = req.body;
-    const foundStudent= data.find(s=> s.Student_Id === student_id)
-    if(foundStudent){
-        res.json(foundStudent);
-    }else{
-        res.status(404).json({message:"student not found!!"})
+    if(!student_id){
+        return res.status(400).json({message: "Student was not found"})
+
     }
 
+    const studentObject = data.find(s =>s.student_id === student_id)
+    res.json(studentObject?.student)
 });
 
 studentInfo.post('/students/course', (req, res) => {
-    const { course_id } = req.body;
+    const { student_id } = req.body;
     const studentsTakenCourse = data.filter(student => 
-        student.courses.includes(course_id)
+        student.courses.includes(student_id)
     );
     const studentIds = studentsTakenCourse.map(student => student.student_id);
     if (studentIds.length > 0) {
