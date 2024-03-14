@@ -1,8 +1,7 @@
-const express = require('express')
-const data = require('../database/student-info.json')
+import express from 'express'
+import data from '../database/student-info.json' assert { type: 'json' };
+
 const studentInfo = express.Router()
-
-
 console.log(data, "this is our data")
 //GET  / to retrieve all the student-info
 //POST /to retrieve your information based on 'student-id'
@@ -20,29 +19,37 @@ studentInfo.get('/studentinfo', (req,res)=>{
     console.log(userIp, userDevice)
     res.json({userIp, userDevice,data})
 })
-studentInfo.post('/student', (req, res) => {
-    const { student_id } = req.body; // Adjust this to match the case used in your JSON objects, if necessary
-    const foundStudent = data.find(s => s.Student_Id === student_id); // Ensure this matches your data structure
-    if (foundStudent) {
-        res.status(200).json(foundStudent);
-    } else {
-        res.status(404).json({ message: "Student not found!!" });
+studentInfo.post("/",(req,res)=>{
+    const userIp= req.userIP;
+    const userDevice = req.userDevice;
+    const student = data.find(item=> item.student_id == req.body.student_id)
+    if(student){
+        res.json({userIp, userDevice,student})
     }
+})
+
+studentInfo.post('/course', (req, res) => {
+    const userIp= req.userIP;
+    const userDevice = req.userDevice;
+    const studentsWithCS548 = data.filter(student=> student.courses.some(course =>
+       course.course_id === 'CS548' )).map(({ student_id})=>({student_id}));
+       res.json({userIp, userDevice,studentsWithCS548})
 });
+studentInfo.post('/mycourses', (req, res) => { 
+    
+    const userIp= req.userIP;
+    const userDevice = req.userDevice;
+    const { student_id } = req.body; 
+    const myCourses = data.find(s => s.student_id === student_id)?.courses.map(
+        c => c.course_id).filter(id => id !== 'CS548') || []; 
 
-studentInfo.post('/students/course', (req, res) => {
-    const { course_id } = req.body;
-    const studentsTakenCourse = data.filter(student => 
-        student.courses.includes(course_id)
-    );
-    const studentIds = studentsTakenCourse.map(student => student.student_id);
-    if (studentIds.length > 0) {
-        res.json(studentIds);
-    } else {
-        res.status(404).json({ message: "No students found for the given course" });
-    }
-});
+    const matchingStudents = data.filter(student => student.courses.some(
+        course => myCourses.includes(course.course_id))).map(({ student_id }) => ({ student_id })); 
+
+    res.json({userIp,userDevice,matchingStudents}); 
+
+}); 
 
 
 
-module.exports = studentInfo
+export default studentInfo;
