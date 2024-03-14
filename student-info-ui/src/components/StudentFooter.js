@@ -11,7 +11,7 @@ export const StudentFooter = (props)=>{
     
     const fetchStudentInfoAPI = async()=>{
             try{
-            const response =await axios.post('https://localhost:8000/https-web-service/v1/student', {student_id: '19946'})
+            const response =await axios.post('https://localhost:8000/https-web-service/v1/course', {course: '485'})
 
               setStudentInfoData(response?.data)
             }catch{
