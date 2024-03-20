@@ -8,14 +8,18 @@ export const StudentFooter = (props)=>{
     const [count, setCount] = useState(0)
     const [studentInfoData, setStudentInfoData]= useState(null)
     const [studentInfoError, setStudentInfoError]= useState(false)
-    
+    const [isloading , setIsLoading] = useState(false)
     const fetchStudentInfoAPI = async()=>{
             try{
-            const response =await axios.post('https://localhost:8000/https-web-service/v1/course', {course: '485'})
+                setIsLoading(true)
+               const response =await axios.post('https://localhost:3000/https-web-service/v1/mycourses', {student_id: '19946'})
 
-              setStudentInfoData(response?.data)
+                setStudentInfoData(response?.data)
             }catch{
                setStudentInfoError(true) 
+            }
+            finally{
+               setIsLoading(false) 
             }
         }
     useEffect(()=>{
@@ -40,7 +44,7 @@ console.log(studentInfoError,"this is the error")
             Clicked: {count}
         </span>
         <span>
-            student info is : {studentInfoData}
+            student info is : {studentInfoData?.mycourses}
         </span>
         <button onClick = {handleClick}>Check</button>
         </>
