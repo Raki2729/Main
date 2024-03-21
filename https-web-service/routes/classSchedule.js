@@ -1,5 +1,6 @@
-const express = require('express')
-const data = require('../database/class-schedule.json')
+import express from 'express';
+import fs from 'fs';
+import data from '../database/class-schedule.json' assert {type: 'json'}
 const classSchedule = express.Router()
 //const fs = require('fs')
 
@@ -98,4 +99,4 @@ classSchedule.post('/courseinfo',(req,res)=>{
  })*/
 
 
-module.exports = classSchedule
+export default classSchedule
