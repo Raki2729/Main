@@ -1,0 +1,5 @@
+
+const GITHUB_TOKEN= process.env.GITHUB_TOKEN || '234556fg67hhhh67778huy'
+const IP2LOCATION_API_KEY = process.env.IP2LOCATION_API_KEY;
+
+export { GITHUB_TOKEN, IP2LOCATION_API_KEY };

@@ -1,27 +1,17 @@
 
 import './App.css';
-import { StudentFooter } from './components/StudentFooter';
-import { StudentHeader } from './components/StudentHeader';
-import { StudentInfo } from './components/StudentInfo';
+
+import { StudentInfo } from './components/StudentInfo.js';
 
 function App() {
-  const isStudentInfo = true;
-  const isSpringBreak = false;
-  const isSummerBreak = true;
+  
+  
   return (
     <div className="App">
       Hello from student-info-ui
-      <StudentHeader
-      isStudentInfo={isStudentInfo}
-      isSpringBreak={isSpringBreak}
-      isSummerBreak={isSummerBreak}/>
-      <StudentInfo
-      isSpringBreak={isSpringBreak}
-      isSummerBreak={isSummerBreak}/>
-      <StudentFooter
-      isStudentInfo={isStudentInfo}
-      isSpringBreak={isSpringBreak}
-      isSummerBreak={isSummerBreak}/>
+      
+      <StudentInfo/>
+      
     </div>
   );
 }

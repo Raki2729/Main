@@ -1,12 +1,17 @@
 import express from 'express'
 import https from 'https'
 import {readFileSync} from 'fs'
-import 'dotenv/config'
+import 'dotenv/config';
 import cors from 'cors';
 import startup from './routes/startup.js'
 import studentInfo from './routes/studentInfo.js'
 import location from './routes/location.js'
+import { GITHUB_TOKEN } from './settings.js';
+import {getLoggerInstance} from './logger.js'
+//import {getGithubApi} from './controller/getGithubApi.js'
 
+
+const logger = getLoggerInstance()
 const app = express()
 // const cert = fs.readFileSync('./ssl/cert.pem')
 // const key = fs.readFileSync('./ssl/key.pem')
@@ -24,7 +29,8 @@ app.use('/https-web-service/v1',studentInfo)
 app.use('/https-web-service/v1',location)
 
 
-console.log(process.env.IP2LOCATION_API_KEY)
+console.log(GITHUB_TOKEN)
+
 // domain-name/web-service/v1/<route/path/> ==> endpoint
 //safeway.com/order-purchases/v1/purchasHistory ==> endpoint
 // safeway.com/order-purchases/v2/purchaseHistory ===> endpoint
@@ -32,8 +38,8 @@ console.log(process.env.IP2LOCATION_API_KEY)
 
 
 
-server.listen(3000, ()=>{
-    console.log('Server is up')
+server.listen(8080, ()=>{
+    logger.info('Server is up')
 })
 
 
